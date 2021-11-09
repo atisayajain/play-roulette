@@ -2,6 +2,10 @@ from django.db import models
 
 
 class Account(models.Model):
+    """ 
+    Model Class for Accounts of Casino, Player & Gateway type.
+    """
+
     CASINO = 0
     PLAYER = 1
     PAYMENT_GATEWAY = 2
@@ -19,8 +23,10 @@ class Account(models.Model):
 
     @property
     def balance(self):
-        amount_credited = Transaction.objects.filter(to_account=self).aggregate(models.Sum('amount'))['amount__sum'] or 0
-        amount_debited = Transaction.objects.filter(from_account=self).aggregate(models.Sum('amount'))['amount__sum'] or 0
+        amount_credited = (Transaction.objects.filter(
+            to_account=self).aggregate(models.Sum('amount'))['amount__sum'] or 0)
+        amount_debited = (Transaction.objects.filter(
+            from_account=self).aggregate(models.Sum('amount'))['amount__sum'] or 0)
         return amount_credited - amount_debited
 
     def __str__(self):
@@ -37,6 +43,10 @@ class Account(models.Model):
 
 
 class PaymentGateway(models.Model):
+    """ 
+    Model Class for Payment Gateway.
+    """
+
     name = models.CharField(max_length=80)
     account = models.OneToOneField(Account, on_delete=models.CASCADE)
 
@@ -44,10 +54,14 @@ class PaymentGateway(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return u"%s" % self.name
+        return u"Payment Gateway - %s" % self.name
 
 
 class Transaction(models.Model):
+    """ 
+    Model Class for Transaction.
+    """
+
     from_account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='from_account')
     to_account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='to_account')
     amount = models.PositiveIntegerField()
