@@ -54,3 +54,6 @@ class Transaction(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return u"%s to %s" % (self.from_account, self.to_account)
