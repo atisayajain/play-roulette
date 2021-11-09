@@ -104,7 +104,7 @@ class GameEndAPIView(views.APIView):
                     win_amount = bet.transaction.amount * game.WIN_RATIO
 
                     payments.models.Transaction.objects.create(
-                        from_account=game.casino.account,
+                        from_account=game.dealer.casino.account,
                         to_account=bet.player.account,
                         amount=win_amount)
 

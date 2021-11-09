@@ -61,8 +61,8 @@ class BetSerializer(serializers.ModelSerializer):
         amount = validated_data.pop('amount')
 
         transaction = payments.models.Transaction.objects.create(
-            from_account=casino_account,
-            to_account=player_account,
+            from_account=player_account,
+            to_account=casino_account,
             amount=amount)
 
         bet = models.Bet.objects.create(

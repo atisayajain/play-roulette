@@ -75,5 +75,5 @@ class Bet(models.Model):
 
     def __str__(self):
         return (u"%s's bet of Rs. %d on %d  on game %d"
-                % (self.player.name, self.number, self.transaction.amount,
+                % (self.player.name, self.transaction.amount, self.bet_number,
                    self.game.id))
